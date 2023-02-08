@@ -140,17 +140,6 @@ const product_create = async (body,id) => {
         "Can't update the following fields: owner_user_id, account_created or account_updated"
       );
     }
-    if (
-      name == undefined ||
-      sku == undefined ||
-      manufacturer == undefined ||
-      description == undefined ||
-      quantity == undefined 
-    ) {
-      throw new BadRequestException(
-        "Can't update the following fields: owner_user_id, account_created or account_updated"
-      );
-    }
   
     try {
       const response = await Product.update(
