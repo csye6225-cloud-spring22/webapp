@@ -10,6 +10,7 @@ import { errorHandler } from "./middleware/ErrorHandler.js";
 import { signInRoute } from "./route/signInRoute.js";
 import { ProtectedRoutes } from "./route/protectedRoute.js";
 import badRequestException from "./error_handling/badRequest.js";
+import { ProductRoutes } from "./route/productRoute.js";
 const app = express();
 
 app.use(bodyparser.json());
@@ -18,7 +19,7 @@ app.use(userRouter);
 app.use(signInRoute);
 
 app.use(ProtectedRoutes);
-
+app.use(ProductRoutes);
 
 app.all("*", async (req) =>{
     throw new urlNotFoundError(`Path Not Found : ${req.url}`);
