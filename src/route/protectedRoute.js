@@ -18,7 +18,7 @@ router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, 
   console.log("In the response: "+req.response);
 
   if (id.toString() !== req.params.userId) {
-    //console.log("Inside if")
+   
     throw new Forbidden("Forbidden Access");
   }
 
@@ -31,10 +31,9 @@ router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, 
 router.get("/v1/user/:userId", checkIdUrl, checkAuthorization, async (req, res) => {
   const { id } = req.response;
 
-  // console.log("In the response: "+req.response);
 
   if (id.toString() !== req.params.userId) {
-    //console.log("Inside if")
+ 
     throw new Forbidden("Forbidden Access");
   }
   

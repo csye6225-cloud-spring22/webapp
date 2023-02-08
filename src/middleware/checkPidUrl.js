@@ -1,6 +1,6 @@
 import BadRequestException from "../error_handling/BadRequest.js";
 
-const checkIdUrl = async (req, res, next) => {
+const checkPidUrl = async (req, res, next) => {
   const isNumeric = function (str) {
     if (typeof str != "string") return false; // we only process strings!
     return (
@@ -9,14 +9,12 @@ const checkIdUrl = async (req, res, next) => {
     ); // ...and ensure strings of whitespace fail
   };
 
-  if (!isNumeric(req.params.userId)) {
+  if (!isNumeric(req.params.productId)) {
     throw new BadRequestException(
-      "Please give the valid number of the user id in the url"
+      "Please give the valid number of the product id in the url"
     );
   }
-  
-
   next();
 };
 
-export { checkIdUrl };
+export { checkPidUrl };
