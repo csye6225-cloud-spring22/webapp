@@ -42,7 +42,7 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
     res.status(201).send(response);
   });
 
-  router.patch("/v1/product/:productId", checkPidUrl, checkAuthorization, checkProductIdOwnerId, emptyContentPut,checkEmptyFields, async (req, res) => {
+  router.patch("/v1/product/:productId", checkPidUrl, checkAuthorization, checkProductIdOwnerId, emptyContentPut, checkEmptyFields, async (req, res) => {
     const { id } = req.response;
    
     const response = await updateProductdetails(req.body, req.params.productId);
