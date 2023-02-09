@@ -9,11 +9,12 @@ import { checkIdUrl } from "../middleware/checkIdUrl.js";
 import { emptyContentPut } from "../middleware/emptyContentPut.js";
 import { PayloadKeyValue } from "../middleware/checkPutPayload.js";
 import { checkContentPutUser } from "../middleware/checkPutUser.js";
+import { checkPutLengthUser } from "../middleware/checklengthputuser.js";
 
 const router = Router();
 
 
-router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, checkContentPutUser, PayloadKeyValue, checkPasswordRegex, async (req, res) => {
+router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, checkContentPutUser,checkPutLengthUser, PayloadKeyValue, checkPasswordRegex, async (req, res) => {
  
   const { id } = req.response;
 

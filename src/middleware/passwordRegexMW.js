@@ -9,10 +9,10 @@ const checkPasswordRegex = async (req, res, next) => {
 
   // Min 5 Characters, At least one letter and one number
   const passwordRegex = new RegExp(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/);
-//   console.log(passwordRegex);
+
 
   if (!passwordRegex.test(password) ) {
-    console.log("coming inside if case");
+    
     throw new BadRequestException(
       "Provide password of length 5 with atleast one alphabet and one number");
   }
