@@ -8,10 +8,11 @@ import { checkPasswordRegex } from "../middleware/passwordRegexMW.js";
 import { emptyContent } from "../middleware/postContentError.js";
 import { checkContentPutUser } from "../middleware/checkPutUser.js";
 import { checkPostLengthUser } from "../middleware/checklengthPostUser.js";
+import { checkContentPosttUser } from "../middleware/checkPostUser.js";
 
 const router = Router();
 
-  router.post("/v1/user", emptyContent, checkContentPutUser, checkPostLengthUser, checkEmailRegex,
+  router.post("/v1/user", emptyContent, checkContentPosttUser, checkPostLengthUser, checkEmailRegex,
   checkPasswordRegex,FIEEMiddleWare, encrypt_password, async (request, response) => {
 
   

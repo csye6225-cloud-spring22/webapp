@@ -8,7 +8,7 @@ const emptyContent = async (req, res, next) => {
     
   }
   else {
-    console.log("inside emptycontent");
+  
     next();
 
   }  

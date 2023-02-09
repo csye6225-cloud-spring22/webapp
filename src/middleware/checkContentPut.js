@@ -15,7 +15,9 @@ const checkContentPut = async (req, res, next) => {
     throw new badRequestException("Enter all attributes correctly ");
   }
 
-  
+  if (Object.keys(req.body).length > 5) {
+    throw new badRequestException("Enter only required fields");
+  }
 
   next();
 };
