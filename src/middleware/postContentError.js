@@ -6,8 +6,11 @@ const emptyContent = async (req, res, next) => {
   {
     throw new badRequestException("Enter user details correctly");
     
-  }else {
+  }
+  else {
+    console.log("inside emptycontent");
     next();
+
   }  
 };
 

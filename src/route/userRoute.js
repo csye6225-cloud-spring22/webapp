@@ -6,11 +6,15 @@ import badRequestException from "../error_handling/badRequest.js";
 import { checkEmailRegex } from "../middleware/emailRegexMW.js";
 import { checkPasswordRegex } from "../middleware/passwordRegexMW.js";
 import { emptyContent } from "../middleware/postContentError.js";
+import { checkContentPutUser } from "../middleware/checkPutUser.js";
+import { checkPostLengthUser } from "../middleware/checklengthPostUser.js";
 
 const router = Router();
 
-  router.post("/v1/user", emptyContent, checkEmailRegex,
+  router.post("/v1/user", emptyContent, checkContentPutUser, checkPostLengthUser, checkEmailRegex,
   checkPasswordRegex,FIEEMiddleWare, encrypt_password, async (request, response) => {
+
+  
       const returned_data = await user_create(request.body);
       delete returned_data.dataValues["password"];
       response.status(201).send(returned_data);
