@@ -1,4 +1,4 @@
-import BadRequestException from "../error_handling/BadRequest.js";
+import BadRequestException from "../error_handling/badRequest.js";
 
 const checkPidUrl = async (req, res, next) => {
   const isNumeric = function (str) {
