@@ -43,10 +43,14 @@ build {
     destination = "/home/ec2-user/webapp.zip"
   }
 
-  //   provisioner "file" {
-  //     source = "./trial.service"
-  //     destination = "/tmp/trial.service"
-  //   }
+    provisioner "file" {
+      source = "./webapp.service"
+      destination = "/tmp/webapp.service"
+    }
+     provisioner "file" {
+      source = "./nginx.conf"
+      destination = "/tmp/nginx.conf"
+    }
 
   provisioner "shell" {
     script = "./app.sh"
