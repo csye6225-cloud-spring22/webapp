@@ -36,7 +36,8 @@ const Product = sq.define("product", {
     validate:{
         min : 0,
         max :100
-    }
+    },
+    allowNull: false
   },
   date_added: {
     type: DataTypes.DATE,

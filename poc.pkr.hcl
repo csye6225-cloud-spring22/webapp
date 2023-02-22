@@ -14,6 +14,7 @@ locals {
 source "amazon-ebs" "trial" {
   profile = "dev"  
   ami_name = "Customized_AMI-${local.timestamp}"
+  ami_users =["708673872243"]
 
   source_ami_filter {
     filters = {

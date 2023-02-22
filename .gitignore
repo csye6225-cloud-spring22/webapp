@@ -109,3 +109,4 @@ dist
 # .github
 
 package-lock.json
+*.zip
