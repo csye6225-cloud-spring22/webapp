@@ -26,7 +26,7 @@ jobs:
       - name: Testing the node modules
         run: npm test
 
-  Compress_and_apply_to_AWS:
+  zipfile_compress:
     runs-on: ubuntu-latest
     needs: build
 
