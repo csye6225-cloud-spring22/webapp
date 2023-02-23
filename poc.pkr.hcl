@@ -32,7 +32,7 @@ source "amazon-ebs" "trial" {
 
   instance_type = var.instanceType
   region        =var.region
-  ssh_username  = var.sshUsername
+//   ssh_username  = var.sshUsername
 }
 
 build {
