@@ -54,12 +54,12 @@ jobs:
 
       - name: Run packer init
         id: init
-        run: "packer init ./poc.pkr.hcl"
+        run: "packer init ."
 
       - name: Run packer validate
         id: validate
-        run: "packer validate ./poc.pkr.hcl"
+        run: "packer validate -var-file=mainVariable.pkrvars.hcl ."
 
       - name: Run `packer build`
         id: build
-        run: "packer build ./poc.pkr.hcl"
+        run: "packer build  -var-file=mainVariable.pkrvars.hcl ."

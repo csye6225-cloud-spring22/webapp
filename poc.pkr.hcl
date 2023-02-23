@@ -12,27 +12,27 @@ locals {
 
 
 source "amazon-ebs" "trial" {
-  profile = "dev"  
+  profile = var.profile
   ami_name = "Customized_AMI-${local.timestamp}"
-  ami_users =["708673872243"]
+  ami_users = var.sharedAmi
 
   source_ami_filter {
     filters = {
-      name                = "amzn2-ami-kernel-5.10-hvm-2.0.20230207.0-x86_64-gp2"
-      root-device-type    = "ebs"
-      virtualization-type = "hvm"
+      name                = var.name
+      root-device-type    = var.root_device_type
+      virtualization-type = var.virtualization_type
     }
     most_recent = true
 
-    owners = ["amazon"]
+    owners =  var.owners_filter
   }
 //   ami_name   = "trial"
 //   source_ami = "ami-01133559d62203fd3"
 
 
-  instance_type = "t2.micro"
-  region        = "us-east-1"
-  ssh_username  = "ec2-user"
+  instance_type = var.instanceType
+  region        =var.region
+  ssh_username  = var.sshUsername
 }
 
 build {

@@ -148,7 +148,7 @@ const product_create = async (body,id) => {
       quantity == undefined 
     ) {
       throw new BadRequestException(
-        "Can't update the following fields: owner_user_id, account_created or account_updated"
+        "Can't give undefined field"
       );
     }
   
