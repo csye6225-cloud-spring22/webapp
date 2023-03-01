@@ -50,7 +50,7 @@ build {
     }
      provisioner "file" {
       source = "./nginx.conf"
-      destination = "/tmp/nginx.conf
+      destination = "/tmp/nginx.conf"
     }
 
   provisioner "shell" {
