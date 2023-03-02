@@ -3,11 +3,12 @@ After=network.target
 Wants=mysqld.service
 
 [Service]
-Environment=PORT=8000
-Environment=DB_USERNAME=root
-Environment=DB_DATABASE=USER
-Environment=DB_PASSWORD=pAsSWo4#
-Environment=DB_HOST=localhost
+# Environment=PORT=8000
+# Environment=DB_USERNAME=root
+# Environment=DB_DATABASE=USER
+# Environment=DB_PASSWORD=pAsSWo4#
+# Environment=DB_HOST=localhost
+EnvironmentFile=/home/ec2-user/.env
 Type=simple
 User=ec2-user
 ExecStart=/usr/bin/node /home/ec2-user/src/index.js

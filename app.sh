@@ -8,20 +8,22 @@ sleep 30
 
 # source ~/.bash_profile
 
-touch ~/.bash_profile
-echo -e "export DB_DATABASE=USER\nexport DB_USERNAME=root\nexport DB_PASSWORD=pAsSWo4#\nexport DB_HOST=localhost\nexport PORT=8000" > ~/.bash_profile
-source ~/.bash_profile
+# touch ~/.bash_profile
+# # echo -e "export DB_DATABASE=USER\nexport DB_USERNAME=root\nexport DB_PASSWORD=pAsSWo4#\nexport DB_HOST=localhost\nexport PORT=8000" > ~/.bash_profile
+# source ~/.bash_profile
 
 sudo yum update -y
+sudo yum upgrade -y
+
 
 # sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
 sudo yum install -y nodejs
 
 sudo amazon-linux-extras install epel -y 
-sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm -y
-sudo yum install mysql-community-server -y
-sudo systemctl start mysqld.service
+# sudo yum install https://dev.mysql.com/get/mysql80-community-release-el7-5.noarch.rpm -y
+# sudo yum install mysql-community-server -y
+# sudo systemctl start mysqld.service
 
 sudo yum install nginx -y
 
@@ -32,8 +34,8 @@ sudo yum install nginx -y
 # export DB_NAME="DEV"
 # export DB_PASSWORD="sUckS&23"
 
-export temp=$(sudo cat /var/log/mysqld.log | grep "A temporary password" | awk -F ' ' '{print $NF}')
-sudo mysql -u root -p$temp --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'pAsSWo4#';CREATE DATABASE USER;USE USER;"
+# export temp=$(sudo cat /var/log/mysqld.log | grep "A temporary password" | awk -F ' ' '{print $NF}')
+# sudo mysql -u root -p$temp --connect-expired-password -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'pAsSWo4#';CREATE DATABASE USER;USE USER;"
 
 cd /home/ec2-user && unzip ./webapp.zip
 
