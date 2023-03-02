@@ -4,11 +4,13 @@ import { deleteFile } from "../util/s3_aws_util.js";
 import { Product } from "../model/Product.js";
 import BadRequestException from "../error_handling/badRequest.js";
 import badRequestException from "../error_handling/badRequest.js";
+import {v4} from "uuid";
 
 const image_create = async (file, productId, detailsUser) => {
   try {
     const productd = await Product.findByPk(productId);
-    const namefile= `UserID:${detailsUser.id}/ProductID:${productd.id}/${file.originalname}`;
+    const namefile= `UserID:${detailsUser.id}/ProductID:${productd.id}/${v4()}/${file.originalname}`;
+
     console.log(namefile);
 
     const responseexist = await ifImageExist(namefile);

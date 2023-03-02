@@ -16,7 +16,7 @@ const quantityCheck = async (req, res, next) => {
     {
         if(!Number.isInteger(quantity)){
         throw new badRequestException(
-        "Please give the valid number for quantity in the url"
+        "Please give the valid number for quantity"
         
     );
         }
