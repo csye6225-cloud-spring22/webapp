@@ -62,4 +62,4 @@ jobs:
 
       - name: Run `packer build`
         id: build
-        run: "packer build  -var-file=mainVariable.pkrvars.hcl -var "sharedAmi=[${{ secrets.sharedAmi }}]" ."
+        run: "packer build  -var-file=mainVariable.pkrvars.hcl -var 'sharedAmi=[${{secrets.sharedAmi}}]' ."
