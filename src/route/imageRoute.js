@@ -1,5 +1,5 @@
 import { Router } from "express";
-import mutler from "multer";
+import multer from "multer";
 import NotFoundError from "../error_handling/NotFoundError.js";
 import { checkAuthorization } from "../middleware/checkAuthorization.js";
 import { checkIidUrl } from "../middleware/checkIidUrl.js";
@@ -7,7 +7,10 @@ import { checkImageexist } from "../middleware/checkImageexist.js";
 import { checkPidUrl } from "../middleware/checkPidUrl.js";
 import { checkProductIdOwnerId } from "../middleware/checkProductIdOwnerId.js";
 // import { fileUpload} from "../service/awsupload.js";
-const upload = mutler({dest :"uploads/"});
+import * as url from "url";
+const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
+// const upload = mutler({dest :"uploads/"});
+const upload = multer({ dest: __dirname + "/uploads/"});
 import {imageAllDetails, image_create, imageDetails, deleteimageId, productIdexistImage, ifImageExist } from "../service/imageService.js" ;
 // import { productIdexist } from "../service/productService.js"
 
