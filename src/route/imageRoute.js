@@ -10,22 +10,37 @@ import { checkProductIdOwnerId } from "../middleware/checkProductIdOwnerId.js";
 import * as url from "url";
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 // const upload = mutler({dest :"uploads/"});
-const upload = multer({ dest: __dirname + "/uploads/"});
+const upload = multer({ dest: __dirname + "/uploads/",
+fileFilter: (req, file, callback) => {
+  if (
+    file.mimetype == "image/png" ||
+    file.mimetype == "image/jpg" ||
+    file.mimetype == "image/jpeg"
+  ) {
+    callback(null, true);
+  } else {
+    callback(null, false);
+    return callback(
+      new badRequestException("Images only with .png, .jpg and .jpeg format are allowed")
+    );
+  }
+},
+});
 import {imageAllDetails, image_create, imageDetails, deleteimageId, productIdexistImage, ifImageExist } from "../service/imageService.js" ;
+import badRequestException from "../error_handling/badRequest.js";
 // import { productIdexist } from "../service/productService.js"
 
 
 const router = Router();
 
 
-
 router.post("/v1/product/:productId/image", checkAuthorization,checkProductIdOwnerId,upload.single("imagefile"), async (req, res) => {
     const file=req.file;
-    console.log("r u here in first step");
-    // if (file==null || file == undefined)
-    // {
-    //     throw new badRequestException("Upload a file. Don't leave it empty");
-    // }
+    // console.log("r u here in first step");
+    if (file==null || file == undefined)
+    {
+        throw new badRequestException("Upload a file. Don't leave it empty");
+    }
 
     const response= await image_create(file,req.params.productId,req.response);
     res.status(201).send(response);
