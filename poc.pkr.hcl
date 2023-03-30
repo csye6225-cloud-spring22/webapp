@@ -53,6 +53,12 @@ build {
       destination = "/tmp/nginx.conf"
     }
 
+    provisioner "file"{
+      source = "./cw_log.json"
+      destination = "/tmp/cw_log.json"
+    }
+
+
   provisioner "shell" {
     script = "./app.sh"
   }

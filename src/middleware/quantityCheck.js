@@ -1,6 +1,7 @@
 
 
 import badRequestException from "../error_handling/badRequest.js";
+import { logger } from "../winston/winston-log.js";
 
 const quantityCheck = async (req, res, next) => {
   const { quantity } = req.body;
@@ -15,6 +16,7 @@ const quantityCheck = async (req, res, next) => {
     if(quantity !== undefined || quantity!== null)
     {
         if(!Number.isInteger(quantity)){
+        logger.error("Please give the valid number for quantity");
         throw new badRequestException(
         "Please give the valid number for quantity"
         

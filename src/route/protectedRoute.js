@@ -10,6 +10,8 @@ import { emptyContentPut } from "../middleware/emptyContentPut.js";
 import { PayloadKeyValue } from "../middleware/checkPutPayload.js";
 import { checkContentPutUser } from "../middleware/checkPutUser.js";
 import { checkPutLengthUser } from "../middleware/checklengthputuser.js";
+import { logger } from "../winston/winston-log.js";
+import { statsd_client } from "../statsD/statsd.js";
 
 const router = Router();
 
@@ -21,12 +23,14 @@ router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, 
   console.log("In the response: "+req.response);
 
   if (id.toString() !== req.params.userId) {
+    logger.error("Forbidden Access");
    
     throw new Forbidden("Forbidden Access");
   }
 
   const response = await updatingGivenFields(req.body, req.params.userId);
-
+  logger.info("User Updated successfully");
+  statsd_client.increment("myapp.userUpdated");
   res.status(204).send();
 });
 
@@ -36,14 +40,15 @@ router.get("/v1/user/:userId", checkIdUrl, checkAuthorization, async (req, res) 
 
 
   if (id.toString() !== req.params.userId) {
- 
+    logger.error("Forbidden Access");
     throw new Forbidden("Forbidden Access");
   }
   
   const userDetails = await getUserById(req.params.userId);
 
   delete userDetails.dataValues["password"];
-
+  logger.info("User Details sent successfully");
+  statsd_client.increment("myapp.userFetched");
   res.status(200).send(userDetails);
 });
 

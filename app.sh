@@ -53,3 +53,13 @@ sudo mv /tmp/webapp.service /etc/systemd/system/webapp.service
 # sudo mv /tmp/cocktails.service /etc/systemd/system/cocktails.service
 # sudo systemctl enable cocktails.service
 # sudo systemctl start cocktails.service
+
+sudo mv /tmp/cw_log.json /home/ec2-user/cw_log.json
+
+sudo yum install amazon-cloudwatch-agent -y 
+
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+    -a fetch-config \
+    -m ec2 \
+    -c file:/home/ec2-user/cw_log.json \
+    -s

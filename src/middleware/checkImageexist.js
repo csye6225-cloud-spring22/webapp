@@ -2,6 +2,7 @@
 
 import NotFoundError from "../error_handling/NotFoundError.js";
 import { imageDetails  } from "../service/imageService.js";
+import { logger } from "../winston/winston-log.js";
 
 
 const checkImageexist = async (req, res, next) => {
@@ -13,6 +14,7 @@ const checkImageexist = async (req, res, next) => {
 
     if(checkIfExists === null || checkIfExists === undefined|| checkIfExists.length === 0){
         console.log("r u inside if");
+        logger.error("Given Image ID Not Found");
         throw new NotFoundError("Given Image ID Not Found");
     }
 

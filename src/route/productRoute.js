@@ -10,6 +10,8 @@ import { checkEmptyFields } from "../middleware/checkEmptyFields.js";
 import { checkProductIdOwnerId } from "../middleware/checkProductIdOwnerId.js";
 import { emptyContentPut } from "../middleware/emptyContentPut.js";
 import { quantityCheck } from "../middleware/quantityCheck.js";
+import { logger } from "../winston/winston-log.js";
+import { statsd_client } from "../statsD/statsd.js";
 
 
 const router = Router();
@@ -18,15 +20,20 @@ router.get("/v1/product/:productId", checkPidUrl, async (req, res) => {
     const {productId} = req.params;
     const checkIfExists = await productIdexist(productId);
     if(checkIfExists === null || checkIfExists === undefined){
+      logger.error("Given Product ID Not Found");
         throw new NotFoundError("Given Product ID Not Found");
     }
     const productDetails = await getProductById(req.params.productId); 
+    logger.info("Product details sent successfully");
+    statsd_client.increment("myapp.productFetched");
     res.status(200).send(productDetails);
   });
 router.delete("/v1/product/:productId", checkAuthorization,checkPidUrl,checkProductIdOwnerId,quantityCheck, async (req, res) => {
     const {productId} = req.params;
    
     const temp = await deleteProductbyId(req.params.productId); 
+    logger.info("Product details deleted successfully");
+    statsd_client.increment("myapp.productDeleted");
     res.status(204).send();
   });
 
@@ -40,6 +47,8 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
 
 
     console.log(response);
+    logger.info("Product created successfully");
+    statsd_client.increment("myapp.productCreated");
     res.status(201).send(response);
   });
 
@@ -47,12 +56,16 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
     const { id } = req.response;
    
     const response = await updateProductdetails(req.body, req.params.productId);
+    logger.info("Product details updated successfully");
+    statsd_client.increment("myapp.productUpdated");
     res.status(204).send();
   });
 
   router.put("/v1/product/:productId", checkPidUrl,checkAuthorization, checkProductIdOwnerId,emptyContentPut, checkContentPut, checkEmptyFields,quantityCheck, async (req, res) => {
     const { id } = req.response;
     const response = await updateProductdetailsPut(req.body, req.params.productId);
+    logger.info("Product details updated successfully");
+    statsd_client.increment("myapp.productUpdated");
     res.status(204).send();
   });
   

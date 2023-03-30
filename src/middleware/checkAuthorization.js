@@ -1,11 +1,13 @@
 import NotAuthorizedError from "../error_handling/Notauthorized.js";
 import { findIfEmailExist } from "../service/userService.js";
 import hash_pwd from "../util/hash_pwd.js";
+import { logger } from "../winston/winston-log.js";
 
 const checkAuthorization = async (req, res, next) => {
   const { authorization } = req.headers;
     
   if (authorization === undefined) {
+    logger.error("authorization code not found");
     throw new NotAuthorizedError("authorization code not found");
   }
 
@@ -22,6 +24,7 @@ const checkAuthorization = async (req, res, next) => {
   console.log(response);
  
   if (response === null) {
+    logger.error("Invalid Email Address");
     throw new NotAuthorizedError("Invalid Email Address");
   } else {
     const pwd_m = await hash_pwd.comparePassword(
@@ -31,7 +34,10 @@ const checkAuthorization = async (req, res, next) => {
 
     
 
-    if (!pwd_m) throw new NotAuthorizedError("Password given is invalid");
+    if (!pwd_m) {
+      logger.error("Password given is invalid");
+      throw new NotAuthorizedError("Password given is invalid");
+    }
   }
 
 
