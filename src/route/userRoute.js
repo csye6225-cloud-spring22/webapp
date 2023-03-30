@@ -9,6 +9,8 @@ import { emptyContent } from "../middleware/postContentError.js";
 import { checkContentPutUser } from "../middleware/checkPutUser.js";
 import { checkPostLengthUser } from "../middleware/checklengthPostUser.js";
 import { checkContentPostUser } from "../middleware/checkPostUser.js";
+import { logger } from "../winston/winston-log.js";
+import { statsd_client } from "../statsD/statsd.js";
 
 const router = Router();
 
@@ -18,6 +20,8 @@ const router = Router();
   
       const returned_data = await user_create(request.body);
       delete returned_data.dataValues["password"];
+      logger.info("User Creation successful" + returned_data);
+      statsd_client.increment("myapp.userCreated");
       response.status(201).send(returned_data);
     // response.send();
     }
@@ -26,6 +30,8 @@ const router = Router();
 
 router.get("/healthz", async (request, respond) => {
     // throw new badRequestException("Hello there");
+    statsd_client.increment("myapp.healthz");
+    logger.info("Checking Healthz");
     respond.status(200).send();
   });
 

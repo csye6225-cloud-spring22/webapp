@@ -3,6 +3,7 @@ import { sq } from "./db/db.js";
 import { sync, User } from "./model/User.js";
 import { Product, syncP } from "./model/Product.js";
 import { syncI, Image } from "./model/Image.js";
+import {winston, logger} from "./winston/winston-log.js";
 
 const PORT = "8000" || process.env.PORT;
 
@@ -27,7 +28,11 @@ const start = async () => {
     foreignKey : "product_id",
     as:"product",
   });
-
+  if (process.env.NODE_ENV !== 'production') {
+    logger.add(new winston.transports.Console({
+      format: winston.format.simple(),
+    }));
+  }
   app.listen(PORT, () => {
     console.log(`Running on the PORT: ${PORT}`);
   });

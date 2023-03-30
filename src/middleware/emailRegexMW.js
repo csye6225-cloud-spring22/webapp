@@ -1,11 +1,13 @@
 
 import BadRequestException from "../error_handling/badRequest.js";
 import InvalidEmail from "../error_handling/invalidEmail.js";
+import { logger } from "../winston/winston-log.js";
 
 const checkEmailRegex = async (req, res, next) => {
   const { username } = req.body;
 
   if (username === "") {
+    logger.error("Username is not given");
     throw new BadRequestException("Username is not given");
   }
   const emailRegex = new RegExp(
@@ -13,10 +15,10 @@ const checkEmailRegex = async (req, res, next) => {
   );
 
   if (!emailRegex.test(username)) {
+    logger.error("Please give valid email address");
     throw new InvalidEmail("Please give valid email address");
   }
-
-
+  
   next();
 };
 

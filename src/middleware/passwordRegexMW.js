@@ -1,9 +1,10 @@
 import BadRequestException from "../error_handling/badRequest.js";
+import { logger } from "../winston/winston-log.js";
 
 const checkPasswordRegex = async (req, res, next) => {
   const { password } = req.body;
   if (password === "") {
-    
+    logger.error("Password not provided");
     throw new BadRequestException("Password not provided");
   }
 
@@ -12,7 +13,7 @@ const checkPasswordRegex = async (req, res, next) => {
 
 
   if (!passwordRegex.test(password) ) {
-    
+    logger.error("Provide password of length 5 with atleast one alphabet and one number");
     throw new BadRequestException(
       "Provide password of length 5 with atleast one alphabet and one number");
   }

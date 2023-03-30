@@ -2,6 +2,9 @@ import { User } from "../model/User.js";
 import BadRequestException from "../error_handling/badRequest.js";
 
 import hash_pwd from "../util/hash_pwd.js";
+import { logger } from "../winston/winston-log.js";
+
+
 
 const user_create = async (body) => {
   const { first_name, last_name, username, password } = body;
@@ -22,6 +25,7 @@ const user_create = async (body) => {
     return await response;
   } catch (err) {
     console.log("Account creation failed");
+    logger.error("Account creation failed");
   }
 };
 const getAllUsersDetails = async () => {
@@ -31,6 +35,7 @@ const getAllUsersDetails = async () => {
     });
     return await response;
   } catch (err) {
+    logger.error("User details can't be fetched");
     console.log("User details can't be fetched");
   }
 };
@@ -39,6 +44,7 @@ const getUserById = async (userId) => {
       const response = await User.findByPk(userId);
       return await response;
     } catch (err) {
+      logger.error("User details can't be fetched by Id: " + err);
       console.error("User details can't be fetched by Id: " + err);
     }
   };
@@ -49,6 +55,7 @@ const findIfEmailExist = async (username) => {
       const response = await User.findOne({ where: { username } });
       return await response;
     } catch (err) {
+      logger.error("Failed to extract details");
       console.error("Failed to extract details");
     }
   };
@@ -72,6 +79,7 @@ const updatingGivenFields = async (body, id) => {
       account_created !== undefined ||
       account_updated !== undefined
     ) {
+      logger.error("Can't update the following fields: username, account_created or account_updated");
       throw new BadRequestException(
         "Can't update the following fields: username, account_created or account_updated"
       );
@@ -97,6 +105,7 @@ const updatingGivenFields = async (body, id) => {
   
       return await response;
     } catch (err) {
+      logger.error("Failed To Extract the given fields");
       console.error("Failed To Extract the given fields");
     }
   };

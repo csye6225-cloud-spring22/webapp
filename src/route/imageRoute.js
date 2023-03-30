@@ -6,8 +6,10 @@ import { checkIidUrl } from "../middleware/checkIidUrl.js";
 import { checkImageexist } from "../middleware/checkImageexist.js";
 import { checkPidUrl } from "../middleware/checkPidUrl.js";
 import { checkProductIdOwnerId } from "../middleware/checkProductIdOwnerId.js";
+import { statsd_client } from "../statsD/statsd.js";
 // import { fileUpload} from "../service/awsupload.js";
 import * as url from "url";
+import { logger } from "../winston/winston-log.js";
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 // const upload = mutler({dest :"uploads/"});
 const upload = multer({ dest: __dirname + "/uploads/",
@@ -20,7 +22,9 @@ fileFilter: (req, file, callback) => {
     callback(null, true);
   } else {
     callback(null, false);
+    logger.error("Provided Invalid file extension");
     return callback(
+    
       new badRequestException("Images only with .png, .jpg and .jpeg format are allowed")
     );
   }
@@ -39,10 +43,13 @@ router.post("/v1/product/:productId/image", checkAuthorization,checkProductIdOwn
     // console.log("r u here in first step");
     if (file==null || file == undefined)
     {
+      logger.error("Upload a file. Don't leave it empty");
         throw new badRequestException("Upload a file. Don't leave it empty");
     }
+    logger.info("Image added successfully");
 
     const response= await image_create(file,req.params.productId,req.response);
+    statsd_client.increment("myapp.imagePosted");
     res.status(201).send(response);
 }
 );
@@ -53,7 +60,10 @@ router.get("/v1/product/:productId/image",checkAuthorization,checkProductIdOwner
     // if(checkIfExists === null || checkIfExists === undefined){
     //     throw new NotFoundError("Given Product ID Not Found");
     // }
+
     const imageADetails = await imageAllDetails(req.params.productId); 
+    logger.info("All image details fetched successfully");
+    statsd_client.increment("myapp.imageAllFetched");
     res.status(200).send(imageADetails);
   });
 
@@ -64,8 +74,8 @@ router.get("/v1/product/:productId/image/:image_id",checkAuthorization,checkProd
     //     throw new NotFoundError("Given Product ID Not Found");
     // }
     const theImageDetails = await imageDetails(req.params.productId, req.params.image_id); 
-
-
+    logger.info("Image details fetched successfully");
+    statsd_client.increment("myapp.imageFetched");
 
     res.status(200).send(theImageDetails);
   });
@@ -80,6 +90,8 @@ router.get("/v1/product/:productId/image/:image_id",checkAuthorization,checkProd
     //     throw new NotFoundError("Given Product ID Not Found");
     // }
     const deleting_image = await deleteimageId(req.params.productId, req.params.image_id); 
+    logger.info("Image deleted successfully");
+    statsd_client.increment("myapp.imageDeleted");
 
     res.status(204).send();
   });

@@ -5,7 +5,7 @@ import { Product } from "../model/Product.js";
 import BadRequestException from "../error_handling/badRequest.js";
 import badRequestException from "../error_handling/badRequest.js";
 import {v4} from "uuid";
-
+import { logger } from "../winston/winston-log.js";
 const image_create = async (file, productId, detailsUser) => {
   try {
     const productd = await Product.findByPk(productId);
@@ -16,6 +16,7 @@ const image_create = async (file, productId, detailsUser) => {
     const responseexist = await ifImageExist(namefile);
  
   if (responseexist) {
+    logger.error( "Image already exists for this product: " + productId);
     throw new BadRequestException(
         "Image already exists for this product: " + productId
       );}
@@ -36,6 +37,7 @@ const image_create = async (file, productId, detailsUser) => {
 
     return imageResponse;
   } catch (err) {
+    logger.error( "Image can't be created" );
     throw new badRequestException(err);
     console.log(err);
 
@@ -51,6 +53,7 @@ const imageAllDetails = async (product_id) => {
       });
       return await response;
     } catch (err) {
+      logger.error( "Image details can't be fetched" );
       console.log("Image details can't be fetched");
     }
   };
@@ -65,6 +68,7 @@ const imageAllDetails = async (product_id) => {
       return await response;
     } catch (err) {
         console.error(err);
+      logger.error( "Image details can't be fetched" );
       console.log("Image details can't be fetched");
     }
   };
@@ -73,6 +77,7 @@ const imageAllDetails = async (product_id) => {
       const response = await Image.findOne({ where: { file_name } });
       return await response;
     } catch (err) {
+      logger.error( "Image already exists" );
       console.error("Image already exists");
     }
   };
@@ -83,6 +88,7 @@ const imageAllDetails = async (product_id) => {
       const response = await Image.findOne({ where: { image_id : imageId } });
       return await response;
     } catch (err) {
+      logger.error( "Product doesn't exist" );
       console.error("Product doesn't exist");
     }
   };
@@ -108,6 +114,7 @@ const imageAllDetails = async (product_id) => {
 
       return await response;
     } catch (err) {
+      logger.error( "Image details can't be deleted" );
       console.error("Image details can't be deleted: " + err);
     }
   };

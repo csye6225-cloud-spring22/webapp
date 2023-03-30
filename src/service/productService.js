@@ -1,5 +1,6 @@
 import { Product } from "../model/Product.js";
 import BadRequestException from "../error_handling/badRequest.js"
+import { logger } from "../winston/winston-log.js";
 
 
 const getProductById = async (productId) => {
@@ -7,7 +8,8 @@ const getProductById = async (productId) => {
       const response = await Product.findByPk(productId);
       return await response;
     } catch (err) {
-      console.error("Product details can't be fetched by Id: " + err);
+      logger.error( "Product details can't be fetched by Id: " + err);
+      // console.error("Product details can't be fetched by Id: " + err);
     }
   };
 
@@ -21,6 +23,7 @@ const getProductById = async (productId) => {
       
       return await response;
     } catch (err) {
+      logger.error( "Product details can't be deleted: " + err);
       console.error("Product details can't be deleted: " + err);
     }
   };
@@ -47,6 +50,7 @@ const product_create = async (body,id) => {
       return await response;
     } catch (err) {
       console.log("Product creation failed");
+      logger.error( "Product creation failed");
       throw new BadRequestException(err+"");
     }
   };
@@ -57,6 +61,7 @@ const product_create = async (body,id) => {
       const response = await Product.findOne({ where: { id : productId } });
       return await response;
     } catch (err) {
+      logger.error( "Product doesn't exist");
       console.error("Product doesn't exist");
     }
   };
@@ -66,6 +71,7 @@ const product_create = async (body,id) => {
       const response = await Product.findOne({attributes: ["owner_user_id"], where: {id: productId}});
       return await response;
     } catch (err) {
+      logger.error( "Product details can't be fetched by Id: " + err);
       console.error("Product details can't be fetched by Id: " + err);
     }
   };
@@ -88,6 +94,7 @@ const product_create = async (body,id) => {
       date_added !== undefined ||
       date_last_updated !== undefined
     ) {
+      logger.error(  "Can't update the following fields: owner_user_id, account_created or account_updated");
       throw new BadRequestException(
         "Can't update the following fields: owner_user_id, account_created or account_updated"
       );
@@ -112,7 +119,8 @@ const product_create = async (body,id) => {
   
       return await response;
     } catch (err) {
-      console.error("Failed To Extract the given fields: "+err);
+      // console.error("Failed To Extract the given fields: "+err);
+      logger.error( "Failed To Extract the given fields: "+err);
       throw new BadRequestException(err+"");
     }
   };
@@ -136,6 +144,7 @@ const product_create = async (body,id) => {
       date_added !== undefined ||
       date_last_updated !== undefined
     ) {
+      logger.error(  "Can't update the following fields: owner_user_id, account_created or account_updated");
       throw new BadRequestException(
         "Can't update the following fields: owner_user_id, account_created or account_updated"
       );
@@ -147,6 +156,7 @@ const product_create = async (body,id) => {
       description == undefined ||
       quantity == undefined 
     ) {
+      logger.error( "Can't give undefined field");
       throw new BadRequestException(
         "Can't give undefined field"
       );
@@ -171,7 +181,8 @@ const product_create = async (body,id) => {
         
       return await response;
     } catch (err) {
-      console.error("Failed To Extract the given fields: "+err);
+      // console.error("Failed To Extract the given fields: "+err);
+      logger.error("Failed To Extract the given fields: "+err);
       throw new BadRequestException(err+"");
     }
   };
