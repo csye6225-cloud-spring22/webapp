@@ -28,7 +28,7 @@ router.get("/v1/product/:productId", checkPidUrl, async (req, res) => {
     statsd_client.increment("myapp.productFetched");
     res.status(200).send(productDetails);
   });
-router.delete("/v1/product/:productId", checkAuthorization,checkPidUrl,checkProductIdOwnerId,quantityCheck, async (req, res) => {
+router.delete("/v1/product/:productId", checkAuthorization,checkPidUrl,checkProductIdOwnerId, async (req, res) => {
     const {productId} = req.params;
    
     const temp = await deleteProductbyId(req.params.productId); 
@@ -54,9 +54,10 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
 
   router.patch("/v1/product/:productId", checkPidUrl, checkAuthorization, checkProductIdOwnerId, emptyContentPut, checkEmptyFields,quantityCheck, async (req, res) => {
     const { id } = req.response;
-   
+    const {quantity} = req.response;
+  
     const response = await updateProductdetails(req.body, req.params.productId);
-    logger.info("Product details updated successfully");
+    logger.info("Product details updated successfully");X
     statsd_client.increment("myapp.productUpdated");
     res.status(204).send();
   });

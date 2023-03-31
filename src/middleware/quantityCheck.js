@@ -13,7 +13,7 @@ const quantityCheck = async (req, res, next) => {
 //       !isNaN(parseFloat(str))
 //     ); // ...and ensure strings of whitespace fail
 //   };
-    if(quantity !== undefined || quantity!== null)
+    if(quantity !== undefined && quantity!== null)
     {
         if(!Number.isInteger(quantity)){
         logger.error("Please give the valid number for quantity");
@@ -22,7 +22,7 @@ const quantityCheck = async (req, res, next) => {
         
     );
         }
-  }
+}
   next();
 };
 
