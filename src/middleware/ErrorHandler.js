@@ -16,6 +16,12 @@ const errorHandler = async (err, req, res, next) => {
     return res.status(err.statusCode).send({ errors: err.serializeError() });
   }
 
+  logger.error("Error Status: " +
+  err.statusCode +
+  " Serialized Error: " +
+  err
+  );
+
   console.log(err);
 
   res.status(400).send({
