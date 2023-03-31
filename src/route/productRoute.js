@@ -57,7 +57,7 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
     const {quantity} = req.response;
   
     const response = await updateProductdetails(req.body, req.params.productId);
-    logger.info("Product details updated successfully");X
+    logger.info("Product details updated successfully");
     statsd_client.increment("myapp.productUpdated");
     res.status(204).send();
   });
