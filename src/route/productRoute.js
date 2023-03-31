@@ -25,7 +25,7 @@ router.get("/v1/product/:productId", checkPidUrl, async (req, res) => {
     }
     const productDetails = await getProductById(req.params.productId); 
     logger.info("Product details sent successfully");
-    statsd_client.increment("myapp.productFetched");
+    statsd_client.increment("myapp_new.productFetched");
     res.status(200).send(productDetails);
   });
 router.delete("/v1/product/:productId", checkAuthorization,checkPidUrl,checkProductIdOwnerId, async (req, res) => {
@@ -33,7 +33,7 @@ router.delete("/v1/product/:productId", checkAuthorization,checkPidUrl,checkProd
    
     const temp = await deleteProductbyId(req.params.productId); 
     logger.info("Product details deleted successfully");
-    statsd_client.increment("myapp.productDeleted");
+    statsd_client.increment("myapp_new.productDeleted");
     res.status(204).send();
   });
 
@@ -48,7 +48,7 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
 
     console.log(response);
     logger.info("Product created successfully");
-    statsd_client.increment("myapp.productCreated");
+    statsd_client.increment("myapp_new.productCreated");
     res.status(201).send(response);
   });
 
@@ -58,7 +58,7 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
   
     const response = await updateProductdetails(req.body, req.params.productId);
     logger.info("Product details updated successfully");
-    statsd_client.increment("myapp.productUpdated");
+    statsd_client.increment("myapp_new.productUpdatedPatch");
     res.status(204).send();
   });
 
@@ -66,7 +66,7 @@ router.post("/v1/product", checkAuthorization, checkEmptyFields,checkContentPut,
     const { id } = req.response;
     const response = await updateProductdetailsPut(req.body, req.params.productId);
     logger.info("Product details updated successfully");
-    statsd_client.increment("myapp.productUpdated");
+    statsd_client.increment("myapp_new.productUpdatedPut");
     res.status(204).send();
   });
   

@@ -21,7 +21,7 @@ const router = Router();
       const returned_data = await user_create(request.body);
       delete returned_data.dataValues["password"];
       logger.info("User Creation successful" + returned_data);
-      statsd_client.increment("myapp.userCreated");
+      statsd_client.increment("myapp_new.userCreated");
       response.status(201).send(returned_data);
     // response.send();
     }
@@ -30,7 +30,7 @@ const router = Router();
 
 router.get("/healthz", async (request, respond) => {
     // throw new badRequestException("Hello there");
-    statsd_client.increment("myapp.healthz");
+    statsd_client.increment("myapp_new.healthz");
     logger.info("Checking Healthz");
     respond.status(200).send();
   });
