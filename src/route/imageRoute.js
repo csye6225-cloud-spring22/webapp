@@ -49,7 +49,7 @@ router.post("/v1/product/:productId/image", checkAuthorization,checkProductIdOwn
     logger.info("Image added successfully");
 
     const response= await image_create(file,req.params.productId,req.response);
-    statsd_client.increment("myapp.imagePosted");
+    statsd_client.increment("myapp_new.imagePosted");
     res.status(201).send(response);
 }
 );
@@ -63,7 +63,7 @@ router.get("/v1/product/:productId/image",checkAuthorization,checkProductIdOwner
 
     const imageADetails = await imageAllDetails(req.params.productId); 
     logger.info("All image details fetched successfully");
-    statsd_client.increment("myapp.imageAllFetched");
+    statsd_client.increment("myapp_new.imageAllFetched");
     res.status(200).send(imageADetails);
   });
 
@@ -75,7 +75,7 @@ router.get("/v1/product/:productId/image/:image_id",checkAuthorization,checkProd
     // }
     const theImageDetails = await imageDetails(req.params.productId, req.params.image_id); 
     logger.info("Image details fetched successfully");
-    statsd_client.increment("myapp.imageFetched");
+    statsd_client.increment("myapp_new.imageFetched");
 
     res.status(200).send(theImageDetails);
   });
@@ -91,7 +91,7 @@ router.get("/v1/product/:productId/image/:image_id",checkAuthorization,checkProd
     // }
     const deleting_image = await deleteimageId(req.params.productId, req.params.image_id); 
     logger.info("Image deleted successfully");
-    statsd_client.increment("myapp.imageDeleted");
+    statsd_client.increment("myapp_new.imageDeleted");
 
     res.status(204).send();
   });

@@ -30,7 +30,7 @@ router.put("/v1/user/:userId", emptyContentPut, checkIdUrl, checkAuthorization, 
 
   const response = await updatingGivenFields(req.body, req.params.userId);
   logger.info("User Updated successfully");
-  statsd_client.increment("myapp.userUpdated");
+  statsd_client.increment("myapp_new.userUpdated");
   res.status(204).send();
 });
 
@@ -48,7 +48,7 @@ router.get("/v1/user/:userId", checkIdUrl, checkAuthorization, async (req, res) 
 
   delete userDetails.dataValues["password"];
   logger.info("User Details sent successfully");
-  statsd_client.increment("myapp.userFetched");
+  statsd_client.increment("myapp_new.userFetched");
   res.status(200).send(userDetails);
 });
 
