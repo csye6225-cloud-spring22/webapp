@@ -20,7 +20,7 @@ const router = Router();
   
       const returned_data = await user_create(request.body);
       delete returned_data.dataValues["password"];
-      logger.info("User Creation successful" + returned_data);
+      logger.info("User Creation successful" + JSON.stringify(returned_data));
       statsd_client.increment("myapp_new.userCreated");
       response.status(201).send(returned_data);
     // response.send();
