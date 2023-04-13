@@ -114,8 +114,8 @@ jobs:
             --query "AutoScalingGroups[0].AutoScalingGroupName" \
             --auto-scaling-group-name terraform_creation
           )"
-          
-          if  [[ ! -z $launch_template_without_quotes && ! -z $auto_scaling_name ]]
+
+          if [ -z $launch_template_without_quotes ] && [ -z $auto_scaling_name ]
           then
 
             echo "Inside if...."
