@@ -115,7 +115,8 @@ jobs:
             --auto-scaling-group-name terraform_creation
           )"
 
-          if [ -z $launch_template_without_quotes ] && [ -z $auto_scaling_name ]
+          
+          if ! [[ $launch_template_id == null ]] && ! [[ $auto_scaling_name == null ]]
           then
 
             echo "Inside if...."
