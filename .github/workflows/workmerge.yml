@@ -128,6 +128,8 @@ jobs:
 
           then
 
+            echo "Inside if...."
+
             aws ec2 create-launch-template-version --launch-template-id $launch_template_without_quotes \
               --version-description Version2.0Template \
               --source-version 1 \
