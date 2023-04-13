@@ -97,7 +97,7 @@ jobs:
           aws-region: us-east-1
 
 
-      - name: Auto refreshing the autoScalingGroup
+      - name: Auto Refreshing the autoScalingGroup
         run: |
           export ami_id="$(aws ec2 describe-images \
             --owners ${{ secrets.OWNER_ID }} \
