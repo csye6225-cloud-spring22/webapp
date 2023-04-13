@@ -124,7 +124,7 @@ jobs:
             --auto-scaling-group-name terraform_creation
           )"
 
-          if  [[ ! -z "$launch_template_without_quotes" &&  ! "$auto_scaling_name" == null ]]
+          if  [[ ! "$launch_template_without_quotes"==null &&  ! "$auto_scaling_name" == null ]]
 
           then
 
