@@ -28,7 +28,7 @@ const router = Router();
   );
 
 
-router.get("/healthz", async (request, respond) => {
+router.get("/health", async (request, respond) => {
     // throw new badRequestException("Hello there");
     statsd_client.increment("myapp_new.healthz");
     logger.info("Checking Healthz");
