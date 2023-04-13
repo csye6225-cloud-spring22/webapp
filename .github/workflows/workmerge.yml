@@ -133,7 +133,7 @@ jobs:
 
             echo "Inside else"
 
-            exit 0s
+            exit 0
 
 
           fi
