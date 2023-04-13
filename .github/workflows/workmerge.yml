@@ -121,7 +121,7 @@ jobs:
 
           export auto_scaling_name="$(aws autoscaling describe-auto-scaling-groups \
             --query "AutoScalingGroups[0].AutoScalingGroupName" \
-            --auto-scaling-group-name created_by_terraform
+            --auto-scaling-group-name terraform_creation
           )"
 
           if  [[ ! -z "$launch_template_without_quotes" &&  ! -z "$auto_scaling_name" ]]
