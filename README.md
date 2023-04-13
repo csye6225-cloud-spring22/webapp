@@ -60,3 +60,7 @@ To build the AMI Package, use the following command
 To include the var file as well, apply the following command
 
 `packer build -var-file=<file-name>.pkrvars.hcl .`
+
+## To import the certificate
+
+`aws acm import-certificate --certificate fileb://certificate.pem --certificate-chain fileb://certificatechain.pem --private-key fileb://privatekey.pem --profile demo`
