@@ -74,7 +74,7 @@ jobs:
       - name: Checking AWS Version
         run: "aws --version"
 
-      - name: Configure AWS Credentials for dev
+      - name: Configure AWS Credentials for dev account
         if: ${{ vars.ENV == 'dev' }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -85,7 +85,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Configure AWS Credentials for demo
+      - name: Configure AWS Credentials for prod account
         if: ${{ vars.ENV == 'prod' }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -106,7 +106,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      - name: Auto Refreshing the auto scaling group
+      - name: Auto refreshing the autoScalingGroup
         run: |
           export ami_id="$(aws ec2 describe-images \
             --owners ${{ secrets.OWNER_ID }} \
@@ -124,8 +124,7 @@ jobs:
             --auto-scaling-group-name terraform_creation
           )"
 
-          if  [[ ! "$launch_template_without_quotes"==null &&  ! "$auto_scaling_name" == null ]]
-
+          if  [[ "$launch_template_without_quotess"!=null && "$auto_scaling_name"!=null ]]
           then
 
             echo "Inside if...."
@@ -138,5 +137,13 @@ jobs:
 
             aws autoscaling start-instance-refresh \
             --auto-scaling-group-name terraform_creation
+ 
+          else 
+
+            echo "Inside else"
+
+            exit 0s
+
+
           fi
     
