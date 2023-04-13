@@ -34,7 +34,7 @@ router.get("/health", async (request, respond) => {
     logger.info("Checking Healthz");
     respond.status(200).send();
   });
-router.get("/dummy2", async (request, respond) => {
+router.get("/dummy3", async (request, respond) => {
     // throw new badRequestException("Hello there");
     // statsd_client.increment("myapp_new.healthz");
     logger.info("Checking Dummy");
