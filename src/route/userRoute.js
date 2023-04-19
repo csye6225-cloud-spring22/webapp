@@ -14,7 +14,7 @@ import { statsd_client } from "../statsD/statsd.js";
 
 const router = Router();
 
-  router.post("/v1/user", emptyContent, checkContentPostUser, checkPostLengthUser, checkEmailRegex,
+  router.post("/v3/user", emptyContent, checkContentPostUser, checkPostLengthUser, checkEmailRegex,
   checkPasswordRegex,FIEEMiddleWare, encrypt_password, async (request, response) => {
 
   
